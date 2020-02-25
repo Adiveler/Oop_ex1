@@ -85,7 +85,7 @@ public class Monom implements function{
 		_power = d.get_power() + _power;
 		_coefficient = d.get_coefficient() * _coefficient;
 	}
-	
+	@Override
 	public String toString() {
 		String ans = "";
 		if (this._coefficient > 0)
@@ -94,8 +94,9 @@ public class Monom implements function{
 		return ans;
 	}
 	// you may (always) add other methods.
-	
-	public boolean equals(Monom m) {	
+	@Override
+	public boolean equals(Object obj) {	
+		Monom m = (Monom) obj;
 		if (comp(_coefficient, m.get_coefficient()) && _power == m.get_power())
 			return true;
 		return false;

@@ -128,7 +128,7 @@ public class Polynom implements Polynom_able{
 		Iterator<Monom> iter = p1.iteretor();
 		ArrayList<Polynom_able> poly = new ArrayList<Polynom_able>();
 		while (iter.hasNext()) {
-			Polynom_able tmp = this.copy();
+			Polynom_able tmp = (Polynom_able)this.copy();
 			Monom m = new Monom (iter.next());
 			tmp.multiply(m);
 			poly.add(tmp);			
@@ -143,9 +143,9 @@ public class Polynom implements Polynom_able{
 	 * @param p1
 	 * @return true if this polynom represents the same function as p1
 	 */
-
-	public boolean equals(Polynom_able p1) {
-				 		
+	@Override
+	public boolean equals(Object obj) {
+		Polynom p1 = (Polynom) obj;
 		boolean eq = true;
 		Iterator<Monom> iter_1 = p1.iteretor();
 		Iterator<Monom> iter_this = this.iteretor();
@@ -203,7 +203,7 @@ public class Polynom implements Polynom_able{
 	 * @return 
 	 */
 	@Override
-	public Polynom_able copy() {
+	public function copy() {
 		Polynom p = new Polynom (this.toString());
 		return p;
 	}
@@ -220,19 +220,20 @@ public class Polynom implements Polynom_able{
 		return p;
 	}
 	/**
-	 * Compute an integral from x0 to x1. 
-	 * @param x0 starting pooint
+	 * Compute a Riman's integral from x0 to x1 in eps steps. 
+	 * @param x0 starting point
 	 * @param x1 end point
+	 * @param eps positive step value
 	 * @return the approximated area above X-axis below this function bounded in the range of [x0,x1]
 	 */
 	@Override
 	public double area(double x0, double x1, double eps) {
-		Polynom_able p = new Polynom();
-		for (Monom monom : monoms) {
-			Monom m = new Monom(monom.get_coefficient()/(monom.get_power()+1), monom.get_power()+1);
-			p.add(m);
+		double localarea = 0;
+		for (double x = x0; x <= x1; x += eps) {
+			if (f(x) > 0)
+				localarea += eps*f(x); 
 		}
-		return p.f(x1) - p.f(x0);
+		return localarea;
 	}
 	/**
 	 * @return an Iterator (of Monoms) over this Polynom

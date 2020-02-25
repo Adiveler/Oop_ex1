@@ -24,7 +24,7 @@ public class PolynomTest {
 		Polynom p = new Polynom (s);
 		System.out.println(p);
 		
-		Polynom_able pc = p.copy();
+		Polynom_able pc = (Polynom_able)p.copy();
 		System.out.println(pc);
 		System.out.println(" p = copy p: " + p.equals(pc));
 		pc.substract(p);
